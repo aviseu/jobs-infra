@@ -1,0 +1,50 @@
+name: Load Balancer apply
+
+on:
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: aviseu-jobs
+  WORKLOAD_IDENTITY_PROVIDER: projects/911924781524/locations/global/workloadIdentityPools/github-actions/providers/github
+  SERVICE_ACCOUNT: github@aviseu-jobs.iam.gserviceaccount.com
+  REGION: europe-west4
+  TRIGGER_REGION: europe-west3
+  GCLOUD_REPOSITORY: jobs
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - id: auth
+        name: Authenticate
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: |-
+          cd load_balancer
+          terraform init
+
+      - name: Terraform Validate
+        run: |-
+          cd load_balancer
+          terraform validate -no-color
+
+      - name: Terraform Apply
+        run: |-
+          cd load_balancer
+          terraform apply -auto-approve -no-color -parallelism 10 \
+            -var project_id=${{ env.PROJECT_ID }} \
+            -var region=${{ env.REGION }}
