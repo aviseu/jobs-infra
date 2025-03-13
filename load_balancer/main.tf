@@ -1,6 +1,6 @@
 locals {
-  api_backend: "https://www.googleapis.com/compute/v1/projects/aviseu-jobs/regions/europe-west4/backendServices/backoffice-api-backend",
-  frontend_backend: "https://www.googleapis.com/compute/v1/projects/aviseu-jobs/regions/europe-west4/backendServices/backoffice-frontend-backend"
+  api_backend = "https://www.googleapis.com/compute/v1/projects/aviseu-jobs/regions/europe-west4/backendServices/backoffice-api-backend"
+  frontend_backend = "https://www.googleapis.com/compute/v1/projects/aviseu-jobs/regions/europe-west4/backendServices/backoffice-frontend-backend"
 }
 
 module "load_balancer" {
@@ -22,7 +22,7 @@ module "load_balancer" {
       certificate : "viseu-me-cloudflare-origin"
       paths : {
         "/" : local.frontend_backend,
-        "/api/*" : local.api_backend,
+        "/api/*" : local.api_backend
       }
     }
   }
