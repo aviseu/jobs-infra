@@ -21,8 +21,8 @@ module "load_balancer" {
       domain : "jobs-backoffice.viseu.me"
       certificate : "viseu-me-cloudflare-origin"
       paths : {
-        "/" : local.frontend_backend,
-        "/api/*" : local.api_backend
+        "/" : "frontend",
+        "/api/*" : "api"
       }
     }
   }
