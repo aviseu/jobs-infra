@@ -1,14 +1,19 @@
+locals {
+  api_backend: "https://www.googleapis.com/compute/v1/projects/aviseu-jobs/regions/europe-west4/backendServices/backoffice-api-backend",
+  frontend_backend: "https://www.googleapis.com/compute/v1/projects/aviseu-jobs/regions/europe-west4/backendServices/backoffice-frontend-backend"
+}
+
 module "load_balancer" {
   source             = "github.com/aviseu/terraform//modules/load_balancer?ref=v1.0.0"
-  project_id         = var.project_id
-  region             = var.region
+  project_id         = "aviseu-jobs"
+  region             = "europe-west4"
   load_balancer_name = "jobs-lb"
   address_name       = "public-ip"
   default_backend    = "frontend"
 
   backends = {
-    "frontend" : var.frontend_backend,
-    "api" : var.api_backend
+    "frontend" : local.frontend_backend,
+    "api" : local.api_backend
   }
 
   routes = {
@@ -16,8 +21,8 @@ module "load_balancer" {
       domain : "jobs-backoffice.viseu.me"
       certificate : "viseu-me-cloudflare-origin"
       paths : {
-        "/" : var.frontend_backend,
-        "/api/*" : var.api_backend
+        "/" : local.frontend_backend,
+        "/api/*" : local.api_backend,
       }
     }
   }

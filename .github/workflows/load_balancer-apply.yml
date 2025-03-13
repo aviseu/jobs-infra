@@ -45,6 +45,4 @@ jobs:
       - name: Terraform Apply
         run: |-
           cd load_balancer
-          terraform apply -auto-approve -no-color -parallelism 10 \
-            -var project_id=${{ env.PROJECT_ID }} \
-            -var region=${{ env.REGION }}
+          terraform apply -auto-approve -no-color -parallelism 10

@@ -1,7 +1,7 @@
 module "database_instance" {
   source              = "github.com/aviseu/terraform//modules/cloud_sql_instance?ref=v1.0.0"
-  project_id          = var.project_id
-  region              = var.region
+  project_id          = "aviseu-jobs"
+  region              = "europe-west4"
   instance_name       = "jobs-db"
   database_version    = "POSTGRES_17"
   tier                = "db-f1-micro"
