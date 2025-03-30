@@ -4,7 +4,7 @@ locals {
 }
 
 module "load_balancer" {
-  source             = "github.com/aviseu/terraform//modules/load_balancer?ref=v1.0.0"
+  source             = "github.com/aviseu/terraform//modules/load_balancer?ref=v1.1.0"
   project_id         = "aviseu-jobs"
   region             = "europe-west4"
   load_balancer_name = "jobs-lb"
