@@ -1,5 +1,5 @@
 module "database_instance" {
-  source              = "github.com/aviseu/terraform//modules/cloud_sql_instance?ref=v1.1.0"
+  source              = "github.com/aviseu/terraform//modules/gcp_cloud_sql_instance?ref=v1.3.0"
   project_id          = "aviseu-jobs"
   region              = "europe-west4"
   instance_name       = "jobs-db"
